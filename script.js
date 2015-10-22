@@ -1,6 +1,3 @@
-var shuffleDeck = shuffle(makeDeck());
-
-
 function Card(rank, suit) {
   this.rank = rank;
   this.suit = suit;
@@ -19,41 +16,49 @@ function makeDeck() {
 }
 
 
-
-// deck.push(new Card(i,'clubs'));
-
-// [{ rank: 1, suit: 'spades'}]
-
 function shuffle(cards) {
   var temp;
   var random;
-  for (var i = 0; i < cards; i++) {
-    random = Math.floor(Math.random(cards[i]) * cards.length - 1);
-    temp = cards[i];
-    temp = cards[random];
-    cards[random] = temp;
+  for (var k = 0; k < cards; k++) {
+    for (var i = 0; i < cards; i++) {
+      random = Math.floor(Math.random(cards[i]) * cards.length - 1);
+      temp = cards[i];
+      temp = cards[random];
+      cards[random] = temp;
+    }
   }
   return cards;
 }
 
-//deal hand is an function that takes a deck, return a hand which is an array which is 2 cards.
-// use the array method that removes the first item from an array
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array;
+}
+
 function dealCard(deck) {
   return deck.shift();
 }
 //dealer gets last card
 function dealRound(deck, numberOfPlayers) {
   var round = [];
-  for (var i = 0; i < numberOfPlayers; i++) {
+  var numberOfHands = numberOfPlayers + 1;
+  for (var i = 0; i < numberOfHands; i++) {
     round.push([]);
-    console.log(round);
   }
     for (var k = 0; k < 2; k++) {
-      for (var j = 1; j < numberOfPlayers; j++) {
+      // number is added by 1 to include dealer.
+      for (var j = 1; j < numberOfHands; j++) {
         round[j].push(dealCard(deck));
       }
       round[0].push(dealCard(deck));
     }
-
   return round;
   }
+
+
+console.log(dealRound(shuffleArray(makeDeck()), 3));
