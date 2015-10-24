@@ -23,7 +23,7 @@ function shuffle(cards) {
     for (var i = 0; i < cards; i++) {
       random = Math.floor(Math.random(cards[i]) * cards.length - 1);
       temp = cards[i];
-      temp = cards[random];
+      cards[i] = cards[random];
       cards[random] = temp;
     }
   }
@@ -60,5 +60,33 @@ function dealRound(deck, numberOfPlayers) {
   return round;
   }
 
+function each(hand, callback) {
+  for (var i = 0; i < hand.length; i++) {
+    callback(hand[i]);
+  }
+}
 
-console.log(dealRound(shuffleArray(makeDeck()), 3));
+function handValue(hand) {
+  for (var i = 0; i < hand.length; i++) { //each player
+    var score = 0;
+    for (var x = 0; x < hand[i].length; x++) { //each card
+      if (hand[i][x].rank === 11 || hand[i][x].rank === 12 || hand[i][x].rank === 13 ) {
+        hand[i][x].rank = 10;
+      }
+      if(hand[i][x].rank === 1) {
+        hand[i][x].rank = 11;
+      }
+      if (hand[i][x].rank === 1 && hand[i][x].rank > 21) {
+        hand[i][x].rank = hand[i][x].rank - 10;
+      }
+      score = score + hand[i][x].rank;
+    }
+    console.log(score);  
+  }
+}
+
+var currentHand = dealRound(shuffleArray(makeDeck()), 3);
+
+handValue(currentHand);
+
+//console.log(dealRound(shuffleArray(makeDeck()), 3));
