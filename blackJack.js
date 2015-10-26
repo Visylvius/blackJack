@@ -87,6 +87,18 @@ function handValue(hand) {
   }
   return score;
 }
+
+function playHand(hand) {
+  var value = prompt('what would you like to do? Hit, Stand, Or Double Down?');
+  value = value.toLowerCase();
+  if (value === 'hit') {
+    //dealCard();
+  } else if (value === 'stand') {
+    //stand
+  } else if (value === 'double down') {
+    //dealCard() + stay + double bet;
+  }
+}
 // function handValue(hand) {
 //   for (var i = 0; i < hand.length; i++) { //each player
 //     var score = 0;
