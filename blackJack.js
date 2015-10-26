@@ -99,27 +99,31 @@ function playHand(hand) {
     //dealCard() + stay + double bet;
   }
 }
-// function handValue(hand) {
-//   for (var i = 0; i < hand.length; i++) { //each player
-//     var score = 0;
-//     for (var x = 0; x < hand[i].length; x++) { //each card
-//       if (hand[i][x].rank === 11 || hand[i][x].rank === 12 || hand[i][x].rank === 13 ) {
-//         hand[i][x].rank = 10;
-//       }
-//       if(hand[i][x].rank === 1) {
-//         hand[i][x].rank = 11;
-//       }
-//       if (hand[i][x].rank === 1 && hand[i][x].rank > 21) {
-//         hand[i][x].rank = hand[i][x].rank - 10;
-//       }
-//       score = score + hand[i][x].rank;
-//     }
-//     console.log(score);
-//   }
-// }
+
 function valueRound(round) {
   for (var i = 0; i < round.length; i++) {
     console.log(handValue(round[i]));
+  }
+}
+
+function playHand(hand) {
+  for (var i = 0; i < hand; i ++) {
+    var value = prompt('what would you like to do? Hit, Stand, Or Double Down?');
+    value = value.toLowerCase();
+    if (value === 'hit') {
+      console.log(hand[i] + dealCard(deck));
+    } else if (value === 'stand') {
+      switchPlayer(); //stand
+    } else if (value === 'double down') {
+      console.log('double down');//dealCard() + stay + double bet;
+    }
+  }
+}
+
+
+function switchPlayer(hand) {
+  for (var i = 1; i < hand.length; i++) {
+    playHand(i);
   }
 }
 
@@ -128,11 +132,26 @@ var deck = shuffle(makeDeck());
 var hand = [];
 var round = dealRound(deck, 3);
 
-console.log(round);
-valueRound(round);
+
+//console.log(valueRound(round));
+playHand(valueRound(round));
+//valueRound(round);
+//valueRound(round);
+//playHand(valueRound(round));
+
+//write function that interacts with one player at a time call it playHand
+// deal round of hands, then let the player play his hand
+//player play function lets players play for each player.length;
+// call dealer play only once
+// call function settle bets
+// players have a ruleset, if round[0], dealer has own ruleset
+//user prompt 'what would you like to do? hit/split/double down/ stand'
+//repeat that loop on each player until the player has stood or has busted
 
 // handValue(dealRound(shuffleArray(makeDeck()), 1));
 //hand.push(deck.shift());
 //hand.push(deck.shift());
 //handValue(hand);
 //console.log(dealRound(shuffleArray(makeDeck()), 3));
+
+//var currentHand = dealRound(shuffle(makeDeck()), 3);
