@@ -48,11 +48,6 @@ function dealRound(deck, numberOfPlayers) {
   return round;
 }
 
-function each(hand, callback) {
-  for (var i = 0; i < hand.length; i++) {
-    callback(hand[i]);
-  }
-}
 
 function handValue(hand) {
   var score = [0];
@@ -61,8 +56,8 @@ function handValue(hand) {
     //console.log(hand);
     //console.log(hand[0].rank);
       if (hand[i].rank === 11 || hand[i].rank === 12 || hand[i].rank === 13 ) {
-        for (var j = 0; j < score.length; j++) {
-         score[j] = score[j] + 10;
+        for (var k = 0; k < score.length; k++) {
+         score[k] = score[k] + 10;
         }
       }
     //if length if the array is 1, you need to push the soft value onto the score
@@ -74,8 +69,8 @@ function handValue(hand) {
       }
 
       if (hand[i].rank === 1 && score.length === 2) {
-        for (var j = 0; j < score.length; j++) {
-          score[j] += 1;
+        for (var l = 0; l < score.length; l++) {
+          score[l] += 1;
         }
       }
       if (hand[i].rank === 1 && score.length === 1) {
@@ -88,54 +83,48 @@ function handValue(hand) {
   return score;
 }
 
-function playHand(hand) {
-  var value = prompt('what would you like to do? Hit, Stand, Or Double Down?');
-  value = value.toLowerCase();
-  if (value === 'hit') {
-    //dealCard();
-  } else if (value === 'stand') {
-    //stand
-  } else if (value === 'double down') {
-    //dealCard() + stay + double bet;
-  }
-}
-
 function valueRound(round) {
   for (var i = 0; i < round.length; i++) {
-    console.log(handValue(round[i]));
+    console.log("Here: " +handValue(round[i]));
   }
 }
 
-function playHand(hand) {
-  for (var i = 0; i < hand; i ++) {
-    var value = prompt('what would you like to do? Hit, Stand, Or Double Down?');
-    value = value.toLowerCase();
-    if (value === 'hit') {
-      console.log(hand[i] + dealCard(deck));
-    } else if (value === 'stand') {
-      switchPlayer(); //stand
-    } else if (value === 'double down') {
-      console.log('double down');//dealCard() + stay + double bet;
+function playHands(hands, deck) {
+  for (var i = 1; i < hands.length; i++) {
+    var playing = true;
+
+    while(playing) {
+      alert("Player" + i);
+      var value = prompt('what would you like to do? Hit, Stand, Or Double Down?');
+      value = value.toLowerCase();
+      console.log(handValue(currentHands[i]));
+
+
+      if (value === "hit") {
+        console.log(currentHands[i]);
+        console.log(currentHands[i].push(dealCard(deck)));
+        console.log(currentHands[i]);
+        console.log(handValue((currentHands[i])));
+
+        if ((handValue(currentHands[i]) > 21)) {
+          alert('im sorry you have busted');
+          playing = false;
+        }
+      } else { // stand, double down
+        console.log("Next player");
+        playing = false;
+      }
     }
   }
 }
 
-
-function switchPlayer(hand) {
-  for (var i = 1; i < hand.length; i++) {
-    playHand(i);
-  }
-}
-
-var currentHand = dealRound(shuffle(makeDeck()), 3);
 var deck = shuffle(makeDeck());
-var hand = [];
-var round = dealRound(deck, 3);
+var currentHands = dealRound(deck, 3);
+var player = dealRound(deck, 1);
+playHands(currentHands, deck);
+valueRound(currentHands);
 
-
-//console.log(valueRound(round));
-playHand(valueRound(round));
-//valueRound(round);
+//console.log(round);
 //valueRound(round);
 //playHand(valueRound(round));
 
@@ -153,5 +142,4 @@ playHand(valueRound(round));
 //hand.push(deck.shift());
 //handValue(hand);
 //console.log(dealRound(shuffleArray(makeDeck()), 3));
-
-//var currentHand = dealRound(shuffle(makeDeck()), 3);
+  
