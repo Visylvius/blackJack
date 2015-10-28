@@ -106,7 +106,7 @@ function playHands(hands, deck) {
         console.log(currentHands[i]);
         console.log(handValue((currentHands[i])));
 
-        if ((handValue(currentHands[i]) > 21)) {
+        if ( (handValue(currentHands[i]) > 21) ) {
           alert('im sorry you have busted');
           playing = false;
         }
@@ -115,12 +115,27 @@ function playHands(hands, deck) {
         playing = false;
       }
     }
+     dealerPlay(currentHands, deck);
   }
+
 }
 
+function dealerPlay(hands, deck) {
+  while (handValue(currentHands[0]) < 17) {
+    currentHands[0].push(dealCard(deck));
+  }
+  //if ( (handValue(currentHands[0]) > 21) ) {
+   /*console.log('The Dealer Busts! Everyone Wins!');
+    } else if ( (handValue(currentHands[0]) > handValue(currentHands[i]) )) {
+        console.log('The Dealer Wins');
+      } else {
+        console.log('Player' + i + 'win');
+      }*/
+}
 var deck = shuffle(makeDeck());
 var currentHands = dealRound(deck, 3);
 var player = dealRound(deck, 1);
+
 playHands(currentHands, deck);
 valueRound(currentHands);
 
