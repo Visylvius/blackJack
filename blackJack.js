@@ -152,8 +152,48 @@ valueRound(currentHands);
 //user prompt 'what would you like to do? hit/split/double down/ stand'
 //repeat that loop on each player until the player has stood or has busted
 
-// handValue(dealRound(shuffleArray(makeDeck()), 1));
-//hand.push(deck.shift());
-//hand.push(deck.shift());
-//handValue(hand);
-//console.log(dealRound(shuffleArray(makeDeck()), 3));
+
+
+// replacement logic for HandValue
+// var myHand = [{
+//   rank: 1
+// }, {
+//   rank: 5
+// }, {
+//   rank: 12
+// }];
+//
+// function handValue(hand) {
+//
+//   var score = 0;
+//   var theHand = [];
+//
+//   for (var i = 0; i < hand.length; i++) {
+//     theHand.push(hand[i].rank);
+//   }
+//
+//   theHand.sort(sortNumber);
+//
+//   for (var i = 0; i < theHand.length; i++) {
+//
+//     if (theHand[i] === 11 || theHand[i] === 12 || theHand[i] === 13) {
+//       score = score + 10;
+//     }
+//     if (theHand[i] >= 2 && theHand[i] <= 10) {
+//       score = score + theHand[i];
+//     }
+//     if (theHand[i] === 1 && score > 10) {
+//       score += 1;
+//     }
+//     if (theHand[i] === 1 && score <= 10) {
+//       score += 11;
+//     }
+//   }
+//   return score;
+// }
+//
+// function sortNumber(a,b) {
+//     return b - a;
+// }
+//
+// console.log(handValue(myHand));
