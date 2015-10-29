@@ -124,13 +124,13 @@ function dealerPlay(hands, deck) {
   while (handValue(currentHands[0]) < 17) {
     currentHands[0].push(dealCard(deck));
   }
-  //if ( (handValue(currentHands[0]) > 21) ) {
-   /*console.log('The Dealer Busts! Everyone Wins!');
+  if ( (handValue(currentHands[0]) > 21) ) {
+    console.log('The Dealer Busts! Everyone Wins!');
     } else if ( (handValue(currentHands[0]) > handValue(currentHands[i]) )) {
         console.log('The Dealer Wins');
       } else {
         console.log('Player' + i + 'win');
-      }*/
+      }
 }
 var deck = shuffle(makeDeck());
 var currentHands = dealRound(deck, 3);
@@ -157,4 +157,3 @@ valueRound(currentHands);
 //hand.push(deck.shift());
 //handValue(hand);
 //console.log(dealRound(shuffleArray(makeDeck()), 3));
-  
