@@ -50,37 +50,36 @@ function dealRound(deck, numberOfPlayers) {
 
 
 function handValue(hand) {
-  var score = [0];
+
+  var score = 0;
+  var theHand = [];
+
   for (var i = 0; i < hand.length; i++) {
-
-    //console.log(hand);
-    //console.log(hand[0].rank);
-      if (hand[i].rank === 11 || hand[i].rank === 12 || hand[i].rank === 13 ) {
-        for (var k = 0; k < score.length; k++) {
-         score[k] = score[k] + 10;
-        }
-      }
-    //if length if the array is 1, you need to push the soft value onto the score
-    // if length of the array is 2 you add 1 to the score
-      if (hand[i].rank >= 2 && hand[i].rank <= 10) {
-        for (var j = 0; j < score.length; j++) {
-          score[j] = score[j] + hand[i].rank;
-        }
-      }
-
-      if (hand[i].rank === 1 && score.length === 2) {
-        for (var l = 0; l < score.length; l++) {
-          score[l] += 1;
-        }
-      }
-      if (hand[i].rank === 1 && score.length === 1) {
-        score.push(score[0] + 1);
-        score[0] += 11;
-
+    theHand.push(hand[i].rank);
   }
-    //console.log(score);
+
+  theHand.sort(sortNumber);
+
+  for (var i = 0; i < theHand.length; i++) {
+
+    if (theHand[i] === 11 || theHand[i] === 12 || theHand[i] === 13) {
+      score = score + 10;
+    }
+    if (theHand[i] >= 2 && theHand[i] <= 10) {
+      score = score + theHand[i];
+    }
+    if (theHand[i] === 1 && score > 10) {
+      score += 1;
+    }
+    if (theHand[i] === 1 && score <= 10) {
+      score += 11;
+    }
   }
   return score;
+}
+
+function sortNumber(a,b) {
+    return b - a;
 }
 
 function valueRound(round) {
@@ -106,7 +105,7 @@ function playHands(hands, deck) {
         console.log(currentHands[i]);
         console.log(handValue((currentHands[i])));
 
-        if ( (handValue(currentHands[i]) > 21) ) {
+        if ((handValue(currentHands[i]) > 21)) {
           alert('im sorry you have busted');
           playing = false;
         }
@@ -114,28 +113,34 @@ function playHands(hands, deck) {
         console.log("Next player");
         playing = false;
       }
-    }
-     dealerPlay(currentHands, deck);
+     }
+   }
+      dealerPlays(currentHands, deck);
   }
 
-}
 
-function dealerPlay(hands, deck) {
-  while (handValue(currentHands[0]) < 17) {
-    currentHands[0].push(dealCard(deck));
-  }
-  if ( (handValue(currentHands[0]) > 21) ) {
-    console.log('The Dealer Busts! Everyone Wins!');
-    } else if ( (handValue(currentHands[0]) > handValue(currentHands[i]) )) {
-        console.log('The Dealer Wins');
-      } else {
-        console.log('Player' + i + 'win');
+function dealerPlays (hands, deck) {
+  var dealerHit = true;
+  var dealerHand = currentHands[0];
+
+  console.log("Dealer's hand:" + handValue(dealerHand));
+
+  while (dealerHit) {
+    if (handValue(dealerHand) < 17) {
+      dealerHand.push(dealCard(deck));
+      console.log("Dealer's hand after hit:" + handValue(dealerHand));
+    } else {
+      dealerHit = false;
+      if (handValue(dealerHand) > 21) {
+        console.log('players win! The dealer busts');
       }
+    }
+  }
 }
-var deck = shuffle(makeDeck());
-var currentHands = dealRound(deck, 3);
-var player = dealRound(deck, 1);
 
+var deck = shuffle(makeDeck());
+var currentHands = dealRound(deck, 1);
+var player = dealRound(deck, 1);
 playHands(currentHands, deck);
 valueRound(currentHands);
 
@@ -152,48 +157,8 @@ valueRound(currentHands);
 //user prompt 'what would you like to do? hit/split/double down/ stand'
 //repeat that loop on each player until the player has stood or has busted
 
-
-
-// replacement logic for HandValue
-// var myHand = [{
-//   rank: 1
-// }, {
-//   rank: 5
-// }, {
-//   rank: 12
-// }];
-//
-// function handValue(hand) {
-//
-//   var score = 0;
-//   var theHand = [];
-//
-//   for (var i = 0; i < hand.length; i++) {
-//     theHand.push(hand[i].rank);
-//   }
-//
-//   theHand.sort(sortNumber);
-//
-//   for (var i = 0; i < theHand.length; i++) {
-//
-//     if (theHand[i] === 11 || theHand[i] === 12 || theHand[i] === 13) {
-//       score = score + 10;
-//     }
-//     if (theHand[i] >= 2 && theHand[i] <= 10) {
-//       score = score + theHand[i];
-//     }
-//     if (theHand[i] === 1 && score > 10) {
-//       score += 1;
-//     }
-//     if (theHand[i] === 1 && score <= 10) {
-//       score += 11;
-//     }
-//   }
-//   return score;
-// }
-//
-// function sortNumber(a,b) {
-//     return b - a;
-// }
-//
-// console.log(handValue(myHand));
+// handValue(dealRound(shuffleArray(makeDeck()), 1));
+//hand.push(deck.shift());
+//hand.push(deck.shift());
+//handValue(hand);
+//console.log(dealRound(shuffleArray(makeDeck()), 3));
