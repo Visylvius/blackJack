@@ -109,9 +109,11 @@ function playHands(hands, deck) {
           alert('im sorry you have busted');
           playing = false;
         }
-      } else { // stand, double down
+      } else if (value === 'stand') { // stand, double down
         console.log("Next player");
         playing = false;
+      } else {
+        
       }
      }
    }
