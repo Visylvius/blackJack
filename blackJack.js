@@ -48,8 +48,10 @@ function dealRound(deck, numberOfPlayers) {
    }
      round[0].push(dealCard(deck));
   }
-  var cardOne = document.getElementsByClassName('card-one');//update the dom for the dealer, add the elements for the player;
-  cardOne[0].setAttribute('src', round[0][1].getCardImagePath());
+  var cardTwo = document.getElementsByClassName('card-two');//update the dom for the dealer, add the elements for the player;
+  var cardOne = document.getElementsByClassName('card-one');
+  cardOne[0].setAttribute('src', './classic-cards/cardback.png');
+  cardTwo[0].setAttribute('src', round[0][1].getCardImagePath());
   return round;
 }
 
