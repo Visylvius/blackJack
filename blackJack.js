@@ -1,6 +1,9 @@
 function Card(rank, suit) {
   this.rank = rank;
   this.suit = suit;
+  this.getCardImagePath = function() {
+    return './classic-cards/' + suit + rank + '.png';
+  };
 }
 
 
@@ -45,6 +48,8 @@ function dealRound(deck, numberOfPlayers) {
    }
      round[0].push(dealCard(deck));
   }
+  var cardOne = document.getElementsByClassName('card-one');//update the dom for the dealer, add the elements for the player;
+  cardOne[0].setAttribute('src', round[0][1].getCardImagePath());
   return round;
 }
 
@@ -84,7 +89,7 @@ function sortNumber(a,b) {
 
 function valueRound(round) {
   for (var i = 0; i < round.length; i++) {
-    console.log("Here: " +handValue(round[i]));
+    console.log("Here: " + handValue(round[i]));
   }
 }
 
@@ -94,18 +99,20 @@ function playHands(hands, deck) {
 
     while(playing) {
       alert("Player" + i);
-      var value = prompt('what would you like to do? Hit, Stand, Or Double Down?');
-      value = value.toLowerCase();
-      console.log(handValue(currentHands[i]));
+      console.log(hands[0][1].rank);
+      var value = prompt('dealer shows ' + rankToString(hands[0][1].rank) + ' you have ' + handValue(hands[i]) + ' what would you like to do? (H)it, (S)tand, Or (D)ouble Down?');
+      value = value[0].toLowerCase();
+      console.log(handValue(hands[i]));
 
 
-      if (value === "hit") {
-        console.log(currentHands[i]);
-        console.log(currentHands[i].push(dealCard(deck)));
-        console.log(currentHands[i]);
-        console.log(handValue((currentHands[i])));
+      if (value === "h") {
+        console.log(hands[i]);
+        console.log(hands[i].push(dealCard(deck)));
+        //add to do display card here;
+        console.log(hands[i]);
+        console.log(handValue((hands[i])));
 
-        if ((handValue(currentHands[i]) > 21)) {
+        if ((handValue(hands[i]) > 21)) {
           alert('im sorry you have busted');
           playing = false;
         }
@@ -113,10 +120,10 @@ function playHands(hands, deck) {
         console.log("Next player");
         playing = false;
       }
-     }
-   }
-      dealerPlays(currentHands, deck);
+    }
   }
+  dealerPlays(hands, deck);
+}
 
 
 function dealerPlays (hands, deck) {
@@ -138,9 +145,22 @@ function dealerPlays (hands, deck) {
   }
 }
 
+function rankToString(rank) {
+  if (rank === 1) {
+    return 'ace';
+  } else if (rank >= 2 && rank <= 10) {
+    return rank;
+  } else if (rank === 11) {
+    return 'jack';
+  } else if (rank === 12) {
+    return 'queen';
+  } else if (rank === 13) {
+    return 'king';
+  }
+}
 var deck = shuffle(makeDeck());
 var currentHands = dealRound(deck, 1);
-var player = dealRound(deck, 1);
+//var player = dealRound(deck, 1);
 playHands(currentHands, deck);
 valueRound(currentHands);
 
