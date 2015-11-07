@@ -40,18 +40,41 @@ function dealRound(deck, numberOfPlayers) {
   var round = [];
   for (var i = 0; i < numberOfPlayers + 1; i++) {
     round.push([]);
+    var playerUl = document.createElement('ul');
+    playerUl.id = "player_" + i;
+    console.log('test' + playerUl);
+    var playerId = document.getElementById('players');
+    playerId.appendChild(playerUl);
   }
   for (var k = 0; k < 2; k++) {
     // number is added by 1 to include dealer.
    for (var j = 1; j <= numberOfPlayers; j++) {
      round[j].push(dealCard(deck));
+     console.log('player_' + j);
+       var playerCards = document.getElementById('player_' + j);
+       var playerLi = document.createElement('li');
+       var cardImg = document.createElement('img');
+       playerCards.appendChild(playerLi).appendChild(cardImg).setAttribute('src', round[j][k].getCardImagePath());
+       playerLi.setAttribute('id', 'player_' + j + 'card' + k);
+       var playerCardOne = document.getElementById('player_' + j + 'card' + k);
+       console.log(playerCardOne);
+       playerCardOne.setAttribute('src', round[j][0].getCardImagePath());
+       //playerLiClass[j].setAttribute('src', round[j][0].getCardImagePath());
+
+
+     //playerLi.innerHTML = 'x';
+
+    //  playerCards.innerHTML =
+     //var playerCardOne = document.getElementsByClassName('player-cards');
+     //var listItems = playerCardOne.innerHTML('<li>"test"</li>');
    }
      round[0].push(dealCard(deck));
   }
-  var cardTwo = document.getElementsByClassName('card-two');//update the dom for the dealer, add the elements for the player;
-  var cardOne = document.getElementsByClassName('card-one');
-  cardOne[0].setAttribute('src', './classic-cards/cardback.png');
-  cardTwo[0].setAttribute('src', round[0][1].getCardImagePath());
+
+  var dealerCardTwo = document.getElementsByClassName('card-two');//update the dom for the dealer, add the elements for the player;
+  var dealerCardOne = document.getElementsByClassName('card-one');
+  dealerCardOne[0].setAttribute('src', './classic-cards/cardback.png');
+  dealerCardTwo[0].setAttribute('src', round[0][1].getCardImagePath());
   return round;
 }
 
