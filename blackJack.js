@@ -184,7 +184,7 @@ function rankToString(rank) {
   }
 }
 var deck = shuffle(makeDeck());
-var currentHands = dealRound(deck, 1);
+var currentHands = dealRound(deck, 3);
 //var player = dealRound(deck, 1);
 playHands(currentHands, deck);
 valueRound(currentHands);
