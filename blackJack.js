@@ -42,7 +42,7 @@ function dealRound(deck, numberOfPlayers) {
     round.push([]);
     var playerUl = document.createElement('ul');
     playerUl.id = "player_" + i;
-    console.log('test' + playerUl);
+    //console.log('test' + playerUl);
     var playerId = document.getElementById('players');
     playerId.appendChild(playerUl);
   }
@@ -50,14 +50,14 @@ function dealRound(deck, numberOfPlayers) {
     // number is added by 1 to include dealer.
    for (var j = 1; j <= numberOfPlayers; j++) {
      round[j].push(dealCard(deck));
-     console.log('player_' + j);
+     //console.log('player_' + j);
        var playerCards = document.getElementById('player_' + j);
        var playerLi = document.createElement('li');
        var cardImg = document.createElement('img');
        playerCards.appendChild(playerLi).appendChild(cardImg).setAttribute('src', round[j][k].getCardImagePath());
        playerLi.setAttribute('id', 'player_' + j + 'card' + k);
        var playerCardOne = document.getElementById('player_' + j + 'card' + k);
-       console.log(playerCardOne);
+       //console.log(playerCardOne);
        playerCardOne.setAttribute('src', round[j][0].getCardImagePath());
        //playerLiClass[j].setAttribute('src', round[j][0].getCardImagePath());
 
@@ -127,12 +127,21 @@ function playHands(hands, deck) {
       console.log(hands[0][1].rank);
       var value = prompt('dealer shows ' + rankToString(hands[0][1].rank) + ' you have ' + handValue(hands[i]) + ' what would you like to do? (H)it, (S)tand, Or (D)ouble Down?');
       value = value[0].toLowerCase();
-      console.log(handValue(hands[i]));
+      //console.log(handValue(hands[i]));
 
 
       if (value === "h") {
-        console.log(hands[i]);
         console.log(hands[i].push(dealCard(deck)));
+        var drawnCards = document.getElementById('player_' + i);
+        var playerLi = document.createElement('li');
+        var cardImg = document.createElement('img');
+        drawnCards.appendChild(playerLi).appendChild(cardImg).setAttribute('src', hands[i][i+1].getCardImagePath());
+        playerLi.setAttribute('id', 'player_' + i + 'card' + (i + 1));
+        var newCard = document.getElementById('player_' + i + 'card' + (i + 1));
+        console.log(newCard);
+        newCard.setAttribute('src', hands[i][i + 1].getCardImagePath());
+
+        console.log(hands[i][i + 1]);
         //add to do display card here;
         console.log(hands[i]);
         console.log(handValue((hands[i])));
@@ -184,7 +193,7 @@ function rankToString(rank) {
   }
 }
 var deck = shuffle(makeDeck());
-var currentHands = dealRound(deck, 3);
+var currentHands = dealRound(deck, 1);
 //var player = dealRound(deck, 1);
 playHands(currentHands, deck);
 valueRound(currentHands);
