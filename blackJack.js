@@ -114,7 +114,7 @@ function sortNumber(a,b) {
 
 function valueRound(round) {
   for (var i = 0; i < round.length; i++) {
-    console.log("Here: " + handValue(round[i]));
+    //console.log("Here: " + handValue(round[i]));
   }
 }
 
@@ -124,7 +124,7 @@ function playHands(hands, deck) {
 
     while(playing) {
       alert("Player" + i);
-      console.log(hands[0][1].rank);
+      //console.log(hands[0][1].rank);
       var value = prompt('dealer shows ' + rankToString(hands[0][1].rank) + ' you have ' + handValue(hands[i]) + ' what would you like to do? (H)it, (S)tand, Or (D)ouble Down?');
       value = value[0].toLowerCase();
       //console.log(handValue(hands[i]));
@@ -135,16 +135,16 @@ function playHands(hands, deck) {
         var drawnCards = document.getElementById('player_' + i);
         var playerLi = document.createElement('li');
         var cardImg = document.createElement('img');
-        drawnCards.appendChild(playerLi).appendChild(cardImg).setAttribute('src', hands[i][i+1].getCardImagePath());
+        drawnCards.appendChild(playerLi).appendChild(cardImg).setAttribute('src', hands[i][i + 1].getCardImagePath());
         playerLi.setAttribute('id', 'player_' + i + 'card' + (i + 1));
         var newCard = document.getElementById('player_' + i + 'card' + (i + 1));
         console.log(newCard);
         newCard.setAttribute('src', hands[i][i + 1].getCardImagePath());
 
-        console.log(hands[i][i + 1]);
+        //console.log(hands[i][i + 1]);
         //add to do display card here;
-        console.log(hands[i]);
-        console.log(handValue((hands[i])));
+        //console.log(hands[i]);
+        //console.log(handValue((hands[i])));
 
         if ((handValue(hands[i]) > 21)) {
           alert('im sorry you have busted');
@@ -162,14 +162,33 @@ function playHands(hands, deck) {
 
 function dealerPlays (hands, deck) {
   var dealerHit = true;
-  var dealerHand = currentHands[0];
+  var dealerHand = hands[0];
 
   console.log("Dealer's hand:" + handValue(dealerHand));
 
   while (dealerHit) {
     if (handValue(dealerHand) < 17) {
-      dealerHand.push(dealCard(deck));
-      console.log("Dealer's hand after hit:" + handValue(dealerHand));
+      var newCard = dealCard(deck);
+      console.log(newCard);
+      // console.log(newCard);
+      // console.log(hands[0]);
+      hands[0].push(newCard);
+      var drawnCards = document.getElementsByClassName('dealer-cards');
+      var dealerLi = document.createElement('li');
+      var cardImg = document.createElement('img');
+      drawnCards.appendChild(dealerLi).appendChild(cardImg).setAttribute('src', newCard.getCardImagePath());
+
+      playerLi.setAttribute('id', 'dealercard' + newCard.rank);
+      var dealerCard = document.getElementById('dealercard' + newCard.rank);
+      console.log(newCard);
+      dealerCard.setAttribute('src', newCard.getCardImagePath());
+      // console.log(hands[0]);
+      // dealerHand.push(dealCard(deck));
+      // console.log('yo');
+      // console.log(hands[0]);
+      //console.log(hands[0]);
+      //console.log(hands[0][dealerCards + 1]);
+      //console.log("Dealer's hand after hit:" + handValue(dealerHand));
     } else {
       dealerHit = false;
       if (handValue(dealerHand) > 21) {
