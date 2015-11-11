@@ -157,6 +157,8 @@ function playHands(hands, deck) {
 function dealerPlays (hands, deck) {
   var dealerHit = true;
   var dealerHand = hands[0];
+  var dealerCardOne = document.getElementsByClassName('card-one');
+  dealerCardOne[0].setAttribute('src', hands[0][0].getCardImagePath());
 
   console.log("Dealer's hand:" + handValue(dealerHand));
 
