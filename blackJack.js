@@ -176,9 +176,9 @@ function dealerPlays (hands, deck) {
       var drawnCards = document.getElementsByClassName('dealer-cards');
       var dealerLi = document.createElement('li');
       var cardImg = document.createElement('img');
-      drawnCards.appendChild(dealerLi).appendChild(cardImg).setAttribute('src', newCard.getCardImagePath());
+      drawnCards[0].appendChild(dealerLi).appendChild(cardImg).setAttribute('src', newCard.getCardImagePath());
 
-      playerLi.setAttribute('id', 'dealercard' + newCard.rank);
+      dealerLi.setAttribute('id', 'dealercard' + newCard.rank);
       var dealerCard = document.getElementById('dealercard' + newCard.rank);
       console.log(newCard);
       dealerCard.setAttribute('src', newCard.getCardImagePath());
