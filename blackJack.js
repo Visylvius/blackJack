@@ -165,7 +165,7 @@ function dealerPlays (hands, deck) {
   while (dealerHit) {
     if (handValue(dealerHand) < 17) {
       var newCard = dealCard(deck);
-      console.log(newCard);
+      console.log(hands[1]);
       // console.log(newCard);
       // console.log(hands[0]);
       hands[0].push(newCard);
@@ -191,6 +191,10 @@ function dealerPlays (hands, deck) {
       dealerHit = false;
       if (handValue(dealerHand) > 21) {
         console.log('players win! The dealer busts');
+      } else if (handValue(dealerHand) > handValue(hands[1])) {
+        console.log('The dealer has a better hand, you lose');
+      } else {
+        console.log('You have a better hand than the dealer, you win!');
       }
     }
   }
