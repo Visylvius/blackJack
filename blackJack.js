@@ -61,12 +61,6 @@ function dealRound(deck, numberOfPlayers) {
        playerCardOne.setAttribute('src', round[j][0].getCardImagePath());
        //playerLiClass[j].setAttribute('src', round[j][0].getCardImagePath());
 
-
-     //playerLi.innerHTML = 'x';
-
-    //  playerCards.innerHTML =
-     //var playerCardOne = document.getElementsByClassName('player-cards');
-     //var listItems = playerCardOne.innerHTML('<li>"test"</li>');
    }
      round[0].push(dealCard(deck));
   }
@@ -174,11 +168,13 @@ function dealerPlays (hands, deck) {
       // console.log(hands[0]);
       hands[0].push(newCard);
       var drawnCards = document.getElementsByClassName('dealer-cards');
+      var div = document.createElement('div');
       var dealerLi = document.createElement('li');
       var cardImg = document.createElement('img');
-      drawnCards.appendChild(dealerLi).appendChild(cardImg).setAttribute('src', newCard.getCardImagePath());
+      console.log(div.appendChild(dealerLi));
+      drawnCards[0].appendChild(dealerLi).appendChild(cardImg).setAttribute('src', newCard.getCardImagePath());
 
-      playerLi.setAttribute('id', 'dealercard' + newCard.rank);
+      dealerLi.setAttribute('id', 'dealercard' + newCard.rank);
       var dealerCard = document.getElementById('dealercard' + newCard.rank);
       console.log(newCard);
       dealerCard.setAttribute('src', newCard.getCardImagePath());
@@ -216,22 +212,3 @@ var currentHands = dealRound(deck, 1);
 //var player = dealRound(deck, 1);
 playHands(currentHands, deck);
 valueRound(currentHands);
-
-//console.log(round);
-//valueRound(round);
-//playHand(valueRound(round));
-
-//write function that interacts with one player at a time call it playHand
-// deal round of hands, then let the player play his hand
-//player play function lets players play for each player.length;
-// call dealer play only once
-// call function settle bets
-// players have a ruleset, if round[0], dealer has own ruleset
-//user prompt 'what would you like to do? hit/split/double down/ stand'
-//repeat that loop on each player until the player has stood or has busted
-
-// handValue(dealRound(shuffleArray(makeDeck()), 1));
-//hand.push(deck.shift());
-//hand.push(deck.shift());
-//handValue(hand);
-//console.log(dealRound(shuffleArray(makeDeck()), 3));
