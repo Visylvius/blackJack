@@ -111,20 +111,10 @@ function valueRound(round) {
     //console.log("Here: " + handValue(round[i]));
   }
 }
-
-
-
-
-
-
-
-      //console.log(hands[0][1].rank)
-      //console.log(handValue(hands[i]));
-
-
-      var hit = function () {
+      var hit = function() {
         var newCard = dealCard(deck);
-        currentHands[1].push(dealCard(deck));
+        console.log(newCard);
+        currentHands[1].push(newCard);
         var drawnCards = document.getElementById('player_' + 1);
         var playerLi = document.createElement('li');
         var cardImg = document.createElement('img');
@@ -132,10 +122,11 @@ function valueRound(round) {
         playerLi.setAttribute('id', 'player_' + 1 + 'card' + currentHands[1].length);
         // var hitCard = document.getElementById('player_' + i + 'card' + hands[1].length);
         // hitCard.setAttribute('src', newCard.getCardImagePath());
-
+        console.log(currentHands[1]);
         if ((handValue(currentHands[1]) > 21)) {
-          alert('im sorry you have busted');
-          playing = false;
+          var result = document.getElementById('result');
+          result.innerHTML = 'im sorry you have busted';
+
         }
       };
       //put with stand function
@@ -156,21 +147,23 @@ function valueRound(round) {
 
 
 
-function dealerPlays (hands, deck) {
+var dealerPlays = function() {
   var dealerHit = true;
-  var dealerHand = hands[0];
+  var dealerHand = currentHands[0];
   var dealerCardOne = document.getElementsByClassName('card-one');
-  dealerCardOne[0].setAttribute('src', hands[0][0].getCardImagePath());
+
+
+  dealerCardOne[0].setAttribute('src', currentHands[0][0].getCardImagePath());
+  console.log(currentHands);
 
   console.log("Dealer's hand:" + handValue(dealerHand));
 
   while (dealerHit) {
     if (handValue(dealerHand) < 17) {
       var newCard = dealCard(deck);
-      console.log(hands[1]);
       // console.log(newCard);
       // console.log(hands[0]);
-      hands[0].push(newCard);
+      currentHands[0].push(newCard);
       var drawnCards = document.getElementsByClassName('dealer-cards');
       var div = document.createElement('div');
       var dealerLi = document.createElement('li');
@@ -196,32 +189,34 @@ function dealerPlays (hands, deck) {
         result.innerHTML= 'dealer busts you win';
 
         console.log('players win! The dealer busts');
-      } else if (handValue(dealerHand) > handValue(hands[1])) {
+      } else if (handValue(dealerHand) > handValue(currentHands[1])) {
         result.innerHTML = ('The dealer has a better hand, you lose');
       } else {
         result.innerHTML = 'You have a better hand than the dealer, you win!';
       }
     }
   }
-}
+};
 
-function rankToString(rank) {
-  if (rank === 1) {
-    return 'ace';
-  } else if (rank >= 2 && rank <= 10) {
-    return rank;
-  } else if (rank === 11) {
-    return 'jack';
-  } else if (rank === 12) {
-    return 'queen';
-  } else if (rank === 13) {
-    return 'king';
-  }
-}
+// function rankToString(rank) {
+//   if (rank === 1) {
+//     return 'ace';
+//   } else if (rank >= 2 && rank <= 10) {
+//     return rank;
+//   } else if (rank === 11) {
+//     return 'jack';
+//   } else if (rank === 12) {
+//     return 'queen';
+//   } else if (rank === 13) {
+//     return 'king';
+//   }
+// }
 var deck = shuffle(makeDeck());
 var currentHands = dealRound(deck, 1);
 var result = document.getElementById('hit');
+var stand = document.getElementById('stand');
 result.addEventListener('click', hit);
+stand.addEventListener('click', dealerPlays);
 //var player = dealRound(deck, 1);
 
 valueRound(currentHands);

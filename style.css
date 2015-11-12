@@ -5,3 +5,7 @@ li {
 body {
   background-color: green;
 }
+#result {
+  text-align: center;
+  color: white;
+}
