@@ -5,6 +5,9 @@ li {
 body {
   background-color: green;
 }
+.container {
+  width: 100%;
+}
 #current-hand {
   text-align: center;
   color: white;
@@ -12,4 +15,12 @@ body {
 #result {
   text-align: center;
   color: white;
+}
+.table {
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+}
+#hit {
+  text-align: center;
 }

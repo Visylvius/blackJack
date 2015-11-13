@@ -74,7 +74,8 @@ function dealRound(deck, numberOfPlayers) {
 
 function handValue(hand) {
 
-  var score = 0;
+  var score = [];
+  score[0] = 0;
   var theHand = [];
 
   for (var i = 0; i < hand.length; i++) {
@@ -86,19 +87,30 @@ function handValue(hand) {
   for (var i = 0; i < theHand.length; i++) {
 
     if (theHand[i] === 11 || theHand[i] === 12 || theHand[i] === 13) {
-      score = score + 10;
+      for (var j = 0; j < score.length; j++) {
+          score[j] = score[j] + 10;
+      }
     }
     if (theHand[i] >= 2 && theHand[i] <= 10) {
-      score = score + theHand[i];
+      for (var j = 0; j < score.length; j++) {
+          score[j] = score[j] + theHand[i];
+      }
     }
-    if (theHand[i] === 1 && score > 10) {
-      score += 1;
-    }
-    if (theHand[i] === 1 && score <= 10) {
-      score += 11;
+    if (theHand[i] === 1) {
+      var currentScoreLength = score.length;
+      for (var k = 0; k < currentScoreLength; k++) {
+        if (score[k] > 10) {
+          score[k] += 1;
+          console.log(score[k]);
+        } else if (score[k] <= 10) {
+          score[k] += 11;
+          score.push(score[k] + 1);
+          console.log(score[k]);
+        }
+      }
     }
   }
-  return score;
+  return score[0];
 }
 
 function sortNumber(a,b) {
@@ -137,10 +149,7 @@ var hit = function() {
     var dealerHit = true;
     var dealerHand = currentHands[0];
     var dealerCardOne = document.getElementsByClassName('card-one');
-    console.log(dealerCardOne);
     dealerCardOne[0].setAttribute('src', currentHands[0][0].getCardImagePath());
-    console.log(currentHands);
-    console.log("Dealer's hand:" + handValue(dealerHand));
     while (dealerHit) {
       if (handValue(dealerHand) < 17) {
         var newCard = dealCard(deck);
@@ -149,11 +158,9 @@ var hit = function() {
         var div = document.createElement('div');
         var dealerLi = document.createElement('li');
         var cardImg = document.createElement('img');
-        console.log(div.appendChild(dealerLi));
         drawnCards[0].appendChild(dealerLi).appendChild(cardImg).setAttribute('src', newCard.getCardImagePath());
         dealerLi.setAttribute('id', 'dealercard' + newCard.rank);
         var dealerCard = document.getElementById('dealercard' + newCard.rank);
-        console.log(newCard);
         dealerCard.setAttribute('src', newCard.getCardImagePath());
       } else {
         dealerHit = false;
@@ -179,8 +186,6 @@ var currentHandValue = document.getElementById('current-hand');
 currentHandValue.innerHTML = 'Your current hand value is ' + handValue(currentHands[1]);
 hitCard.addEventListener('click', hit);
 stand.addEventListener('click', dealerPlays);
-
-
 valueRound(currentHands);
 
 //if (handValue(currentHands[1][0].rank === 1) || handValue(currentHands[1][0].rank === 11) || handValue(currentHands[1][0].rank === 12) || handValue(currentHands[1][0].rank === 13) && handValue(currentHands[1][1].rank === 1) || handValue(currentHands[1][1].rank === 11) || handValue(currentHands[1][1].rank === 12) || handValue(currentHands[1][1].rank === 13)); {
