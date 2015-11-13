@@ -162,6 +162,8 @@ var hit = function() {
           result.innerHTML= 'the dealer busts you win';
         } else if (handValue(dealerHand) > handValue(currentHands[1])) {
           result.innerHTML = 'The dealer has a better hand, you lose';
+        } else if (handValue(dealerHand) === handValue(currentHands[1])) {
+          result.innerHTML = 'You and the dealer have tied';
         } else {
           result.innerHTML = 'You have a better hand than the dealer, you win!';
         }
@@ -177,10 +179,10 @@ var currentHandValue = document.getElementById('current-hand');
 currentHandValue.innerHTML = 'Your current hand value is ' + handValue(currentHands[1]);
 hitCard.addEventListener('click', hit);
 stand.addEventListener('click', dealerPlays);
-//var player = dealRound(deck, 1);
+
 
 valueRound(currentHands);
 
-// if ((handValue(currentHands[1][0].rank === 1)) || (handValue(currentHands[1][0].rank === 11)) || (handValue(currentHands[1][0].rank === 12)) || (handValue(currentHands[1][0].rank === 13)) && (handValue(currentHands[1][1].rank === 1)) || (handValue(currentHands[1][1].rank === 11)) || (handValue(currentHands[1][1].rank === 12)) || (handValue(currentHands[1][1].rank === 13))); {
-//   result.innerHTML = 'You got Blackjack, you win!';
-// }
+//if (handValue(currentHands[1][0].rank === 1) || handValue(currentHands[1][0].rank === 11) || handValue(currentHands[1][0].rank === 12) || handValue(currentHands[1][0].rank === 13) && handValue(currentHands[1][1].rank === 1) || handValue(currentHands[1][1].rank === 11) || handValue(currentHands[1][1].rank === 12) || handValue(currentHands[1][1].rank === 13)); {
+   //result.innerHTML = 'You got Blackjack, you win!';
+//}
