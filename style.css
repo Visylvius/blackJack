@@ -5,6 +5,10 @@ li {
 body {
   background-color: green;
 }
+#current-hand {
+  text-align: center;
+  color: white;
+}
 #result {
   text-align: center;
   color: white;
