@@ -17,10 +17,17 @@ body {
   color: white;
 }
 .table {
-  width: 40%;
+  width: 20%;
   margin-left: auto;
   margin-right: auto;
 }
-#hit {
+/*#hit {
+  text-align: center;
+  vertical-align: middle;
+  margin: 0 auto;
+
+}*/
+.buttons {
+  width: auto;
   text-align: center;
 }
