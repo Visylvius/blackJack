@@ -48,19 +48,14 @@ function dealRound(deck, numberOfPlayers) {
     // number is added by 1 to include dealer.
    for (var j = 1; j <= numberOfPlayers; j++) {
      round[j].push(dealCard(deck));
-     //console.log('player_' + j);
        var playerCards = document.getElementById('player_' + j);
        var playerLi = document.createElement('li');
        var cardImg = document.createElement('img');
        playerCards.appendChild(playerLi).appendChild(cardImg).setAttribute('src', round[j][k].getCardImagePath());
        playerLi.setAttribute('id', 'player_' + j + 'card' + k);
        var playerCardOne = document.getElementById('player_' + j + 'card' + k);
-       //console.log(playerCardOne);
        playerCardOne.setAttribute('src', round[j][0].getCardImagePath());
-
-       //playerLiClass[j].setAttribute('src', round[j][0].getCardImagePath());
-
-   }
+    }
      round[0].push(dealCard(deck));
   }
 
@@ -81,11 +76,20 @@ function handValue(hand) {
   for (var i = 0; i < hand.length; i++) {
     theHand.push(hand[i].rank);
   }
-
+  console.log(theHand);
+  if ( theHand[0] === 1 || (theHand[1] === 1)) {
+    if (
+      (theHand[0] === 1 || theHand[0] === 11 || theHand[0] === 12 || theHand[0] === 13)
+      &&
+      (theHand[1] === 1 || theHand[1] === 11 || theHand[1] === 12 || theHand[1] === 13 )
+      ) {
+        var result = document.getElementById('result');
+        result.innerHTML = 'You got Blackjack!';
+    }
+  }
   theHand.sort(sortNumber);
 
   for (var i = 0; i < theHand.length; i++) {
-
     if (theHand[i] === 11 || theHand[i] === 12 || theHand[i] === 13) {
       for (var j = 0; j < score.length; j++) {
           score[j] = score[j] + 10;
@@ -101,11 +105,11 @@ function handValue(hand) {
       for (var k = 0; k < currentScoreLength; k++) {
         if (score[k] > 10) {
           score[k] += 1;
-          console.log(score[k]);
+          //console.log(score[k]);
         } else if (score[k] <= 10) {
           score[k] += 11;
           score.push(score[k] + 1);
-          console.log(score[k]);
+          //console.log(score[k]);
         }
       }
     }
@@ -124,7 +128,7 @@ function valueRound(round) {
 }
 var hit = function() {
   var newCard = dealCard(deck);
-  console.log(newCard);
+  //console.log(newCard);
   currentHands[1].push(newCard);
   currentHandValue.innerHTML = 'Your current hand value is ' + handValue(currentHands[1]);
   var drawnCards = document.getElementById('player_' + 1);
@@ -135,12 +139,12 @@ var hit = function() {
   playerLi.setAttribute('id', 'player_' + 1 + 'card' + currentHands[1].length);
   // var hitCard = document.getElementById('player_' + i + 'card' + hands[1].length);
   // hitCard.setAttribute('src', newCard.getCardImagePath());
-  console.log(currentHands[1]);
+  //console.log(currentHands[1]);
   if ((handValue(currentHands[1]) > 21)) {
     currentHandValue.innerHTML = 'Your current hand value is ' + handValue(currentHands[1]);
     result.innerHTML = "I'm sorry you have busted";
     var dealerCardOne = document.getElementsByClassName('card-one');
-    console.log(dealerCardOne);
+    //console.log(dealerCardOne);
     dealerCardOne[0].setAttribute('src', currentHands[0][0].getCardImagePath());
   }
 };
