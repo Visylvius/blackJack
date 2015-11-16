@@ -17,10 +17,24 @@ body {
   color: white;
 }
 .table {
+  text-align: center;
   width: 20%;
   margin-left: auto;
   margin-right: auto;
 }
+#players_1 {
+  /*text-align: center;*/
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+  /*padding: 10px;*/
+}
+.dealer-cards {
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+}
+
 /*#hit {
   text-align: center;
   vertical-align: middle;

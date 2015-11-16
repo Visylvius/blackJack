@@ -84,6 +84,8 @@ function handValue(hand) {
       (theHand[1] === 1 || theHand[1] === 11 || theHand[1] === 12 || theHand[1] === 13 )
       ) {
         var result = document.getElementById('result');
+        var dealerCardOne = document.getElementsByClassName('card-one');
+        dealerCardOne[0].setAttribute('src', currentHands[0][0].getCardImagePath());
         result.innerHTML = 'You got Blackjack!';
     }
   }
@@ -143,9 +145,11 @@ var hit = function() {
   if ((handValue(currentHands[1]) > 21)) {
     currentHandValue.innerHTML = 'Your current hand value is ' + handValue(currentHands[1]);
     result.innerHTML = "I'm sorry you have busted";
+
     var dealerCardOne = document.getElementsByClassName('card-one');
     //console.log(dealerCardOne);
     dealerCardOne[0].setAttribute('src', currentHands[0][0].getCardImagePath());
+    hitCard.removeEventListener('click', hit);
   }
 };
 
@@ -191,7 +195,3 @@ currentHandValue.innerHTML = 'Your current hand value is ' + handValue(currentHa
 hitCard.addEventListener('click', hit);
 stand.addEventListener('click', dealerPlays);
 valueRound(currentHands);
-
-//if (handValue(currentHands[1][0].rank === 1) || handValue(currentHands[1][0].rank === 11) || handValue(currentHands[1][0].rank === 12) || handValue(currentHands[1][0].rank === 13) && handValue(currentHands[1][1].rank === 1) || handValue(currentHands[1][1].rank === 11) || handValue(currentHands[1][1].rank === 12) || handValue(currentHands[1][1].rank === 13)); {
-   //result.innerHTML = 'You got Blackjack, you win!';
-//}
