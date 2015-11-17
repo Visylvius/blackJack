@@ -154,6 +154,7 @@ var hit = function() {
 };
 
   var dealerPlays = function() {
+    hitCard.removeEventListener('click', hit);
     var dealerHit = true;
     var dealerHand = currentHands[0];
     var dealerCardOne = document.getElementsByClassName('card-one');
@@ -164,6 +165,9 @@ var hit = function() {
         currentHands[0].push(newCard);
         var drawnCards = document.getElementsByClassName('dealer-cards');
         var div = document.createElement('div');
+        div.className = 'dealers-newCard';
+        // set className for above div, then write a loop that will remove all elements from the parent, 'dealer-cards', with get ElementsByClassName
+
         var dealerLi = document.createElement('li');
         var cardImg = document.createElement('img');
         drawnCards[0].appendChild(dealerLi).appendChild(cardImg).setAttribute('src', newCard.getCardImagePath());
@@ -186,12 +190,35 @@ var hit = function() {
     }
   };
 
-var deck = shuffle(makeDeck());
-var currentHands = dealRound(deck, 1);
+function newGame() {
+  var playersDiv = document.getElementById('players');
+  while (playersDiv.firstChild) {
+    playersDiv.removeChild(playersDiv.firstChild);
+  }
+  var dealerCardTwo = document.getElementsByClassName('card-two');//update the dom for the dealer, add the elements for the player;
+  var dealerCardOne = document.getElementsByClassName('card-one');
+  dealerCardOne[0].setAttribute('src', '');
+  dealerCardTwo[0].setAttribute('src', '');
+  currentHandValue.innerHTML = '';
+  var result = document.getElementById('result');
+  result.innerHTML = '';
+  var dealersNewCard = document.getElementsByClassName('dealers-NewCard');
+  for (var i = 0; i < dealersNewCard[0].length; i++) {
+    
+  }
+  deck = shuffle(makeDeck());
+  currentHands = dealRound(deck, 1);
+  currentHandValue.innerHTML = 'your current hand value is ' + handValue(currentHands[1]);
+
+}
+
+var deck = null;
+var currentHands = null;
+var newGameButton = document.getElementById('new-game');
 var hitCard = document.getElementById('hit');
 var stand = document.getElementById('stand');
 var currentHandValue = document.getElementById('current-hand');
-currentHandValue.innerHTML = 'Your current hand value is ' + handValue(currentHands[1]);
+
 hitCard.addEventListener('click', hit);
 stand.addEventListener('click', dealerPlays);
-valueRound(currentHands);
+newGameButton.addEventListener('click', newGame);
