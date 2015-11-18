@@ -58,11 +58,15 @@ function dealRound(deck, numberOfPlayers) {
     }
      round[0].push(dealCard(deck));
   }
-
-  var dealerCardTwo = document.getElementsByClassName('card-two');//update the dom for the dealer, add the elements for the player;
-  var dealerCardOne = document.getElementsByClassName('card-one');
-  dealerCardOne[0].setAttribute('src', './classic-cards/cardback.png');
-  dealerCardTwo[0].setAttribute('src', round[0][1].getCardImagePath());
+  var dealerHand = document.getElementsByClassName('dealer-cards')[0];
+  var dealerLi = document.createElement('li');
+  var img = document.createElement('img');
+  dealerHand.insertAdjacentHTML('beforeend', '<li><img class="card-one"></li><li><img class="card-two"></li>');
+  var dealerCardOne = document.getElementsByClassName('card-one')[0];
+  var dealerCardTwo = document.getElementsByClassName('card-two')[0];
+  console.log(dealerCardOne);
+  dealerCardOne.setAttribute('src', './classic-cards/cardback.png');
+  dealerCardTwo.setAttribute('src', round[0][1].getCardImagePath());
   return round;
 }
 
@@ -165,10 +169,9 @@ var hit = function() {
         currentHands[0].push(newCard);
         var drawnCards = document.getElementsByClassName('dealer-cards');
         var div = document.createElement('div');
-        div.className = 'dealers-newCard';
         // set className for above div, then write a loop that will remove all elements from the parent, 'dealer-cards', with get ElementsByClassName
-
         var dealerLi = document.createElement('li');
+        dealerLi.className = 'dealers-NewCard';
         var cardImg = document.createElement('img');
         drawnCards[0].appendChild(dealerLi).appendChild(cardImg).setAttribute('src', newCard.getCardImagePath());
         dealerLi.setAttribute('id', 'dealercard' + newCard.rank);
@@ -195,16 +198,22 @@ function newGame() {
   while (playersDiv.firstChild) {
     playersDiv.removeChild(playersDiv.firstChild);
   }
-  var dealerCardTwo = document.getElementsByClassName('card-two');//update the dom for the dealer, add the elements for the player;
-  var dealerCardOne = document.getElementsByClassName('card-one');
-  dealerCardOne[0].setAttribute('src', '');
-  dealerCardTwo[0].setAttribute('src', '');
+  // var dealerCardLi = document.getElementsByClassName('dealer-card-two');
+  // while (dealerCardLi.firstChild) {
+  //   dealerCardLi.removeChild(dealerCardLi.firstChild);
+  // }
+  // var dealerCardTwo = document.getElementsByClassName('card-two');//update the dom for the dealer, add the elements for the player;
+  // var dealerCardOne = document.getElementsByClassName('card-one');
+  // dealerCardOne[0].setAttribute('src', '');
+  // dealerCardTwo[0].setAttribute('src', '');
   currentHandValue.innerHTML = '';
   var result = document.getElementById('result');
   result.innerHTML = '';
+  hitCard.addEventListener('click', hit);
   var dealersNewCard = document.getElementsByClassName('dealers-NewCard');
-  for (var i = 0; i < dealersNewCard[0].length; i++) {
-    
+  var dealersHand = document.getElementsByClassName('dealer-cards')[0];
+  while (dealersHand.firstChild) {
+    dealersHand.removeChild(dealersHand.firstChild);
   }
   deck = shuffle(makeDeck());
   currentHands = dealRound(deck, 1);
