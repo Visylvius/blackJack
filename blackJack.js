@@ -1,6 +1,6 @@
 //Global Variables
-var deck = null;
-var currentHands = null;
+var deck;
+var currentHands;
 var newGameButton = document.getElementById('new-game');
 var hitCard = document.getElementById('hit');
 var stand = document.getElementById('stand');
@@ -53,14 +53,14 @@ function dealRound(deck, numberOfPlayers) {
   //we use numberOfPlayers + 1 to make that the zero index is saved for the dealer. This will allow us to card code the dealer values in the future
   for (var i = 0; i < numberOfPlayers + 1; i++) {
     round.push([]);
-    //dynmically create a ul, within the foor loop make the Ul id unique for each player
+    //dynmically create a ul, within the for loop make the Ul id unique for each player
     var playerUl = document.createElement('ul');
-    //Set the Id in the four loop, so we can dynmically select each player further in the function
+    //Set the Id in the for loop, so we can dynmically select each player further in the function
     playerUl.id = "player_" + i;
     var playerId = document.getElementById('players');
     playerId.appendChild(playerUl);
   }
-  //first four loop in order to make sure each player gets two cards
+  //first for loop in order to make sure each player gets two cards
   for (var k = 0; k < 2; k++) {
     // we set j equal to one to make sure we skip over the dealer which is index 0, house deals to players, then deals to itself.
    for (var j = 1; j <= numberOfPlayers; j++) {
@@ -108,10 +108,9 @@ function handValue(hand) {
   // it shows the dealers card, and declares that you have blackjack
   if ( theHand[0] === 1 || (theHand[1] === 1)) {
     if (
-      (theHand[0] === 1 || theHand[0] === 11 || theHand[0] === 12 || theHand[0] === 13)
-      &&
-      (theHand[1] === 1 || theHand[1] === 11 || theHand[1] === 12 || theHand[1] === 13 )
-      ) {
+      (theHand[0] === 11 || theHand[0] === 12 || theHand[0] === 13) ||
+      theHand[1] === 11 || theHand[1] === 12 || theHand[1] === 13 )
+       {
         var result = document.getElementById('result');
         var dealerCardOne = document.getElementsByClassName('card-one');
         dealerCardOne[0].setAttribute('src', currentHands[0][0].getCardImagePath());
@@ -158,12 +157,6 @@ function handValue(hand) {
 function sortNumber(a,b) {
     return b - a;
 }
-
-// function valueRound(round) {
-//   for (var i = 0; i < round.length; i++) {
-//     //console.log("Here: " + handValue(round[i]));
-//   }
-// }
 
 //whenever a play clicks the hit button, they get dealt a card, this function dynmically creates DOM elements, and then uses
 //the getCardImagePath function to render the appropriate card on screen
@@ -260,6 +253,7 @@ function newGame() {
   while (dealersHand.firstChild) {
     dealersHand.removeChild(dealersHand.firstChild);
   }
+  //because we defined deck variable at the top, we can access it within the function, and we use the deck variable within other functions
   deck = shuffle(makeDeck());
   currentHands = dealRound(deck, 1);
   currentHandValue.innerHTML = 'your current hand value is ' + handValue(currentHands[1]);

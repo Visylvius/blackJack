@@ -1,49 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+h2, ul, .buttons {
+  text-align: center;
+}
+
 li {
-  list-style-type: none;
   display: inline-block;
+  list-style-type: none;
+  margin: 1em .25em;
+}
+
+button {
+  padding: .5em;
 }
 body {
   background-color: green;
-}
-.container {
-  width: 100%;
-}
-#current-hand {
-  text-align: center;
-  color: white;
 }
 #result {
   text-align: center;
   color: white;
 }
-.table {
+#current-hand {
   text-align: center;
-  width: 20%;
-  margin-left: auto;
-  margin-right: auto;
-}
-#players_1 {
-  /*text-align: center;*/
-  margin: auto;
-  width: 90%;
-  /*padding: 10px;*/
-}
-.dealer-cards {
-    margin: auto;
-    width: 60%;
-}
-
-/*#hit {
-  text-align: center;
-  vertical-align: middle;
-  margin: 0 auto;
-
-}*/
-.buttons {
-  width: auto;
-  text-align: center;
-  margin-left: 50px;
-}
-#new-game {
-
+  color: white;
 }
