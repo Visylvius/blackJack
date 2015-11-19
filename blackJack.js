@@ -93,17 +93,19 @@ function dealRound(deck, numberOfPlayers) {
 }
 
 //takes the rank key of the Card object and applies the logic to make 11 and above equal to face cards
-//also adds logic for aces. As they can be equal to 1 or 11. 
+//also adds logic for aces. As they can be equal to 1 or 11.
 function handValue(hand) {
-
   var score = [];
   score[0] = 0;
   var theHand = [];
-
+  // takes each card in the hand and pushes the rank value onto the blank hand array, we will then
+  //add the appropriate value to the players hand according to the integer value
   for (var i = 0; i < hand.length; i++) {
     theHand.push(hand[i].rank);
   }
   console.log(theHand);
+  //blackjack logic, it first checks to see if either of the two cards in your hand are an ace, then if you have a face card in addition to the ace
+  // it shows the dealers card, and declares that you have blackjack
   if ( theHand[0] === 1 || (theHand[1] === 1)) {
     if (
       (theHand[0] === 1 || theHand[0] === 11 || theHand[0] === 12 || theHand[0] === 13)
@@ -116,85 +118,105 @@ function handValue(hand) {
         result.innerHTML = 'You got Blackjack!';
     }
   }
+  //we sort the hand in order to properly execute the following logic.
   theHand.sort(sortNumber);
 
+//logic for face cards
   for (var i = 0; i < theHand.length; i++) {
     if (theHand[i] === 11 || theHand[i] === 12 || theHand[i] === 13) {
       for (var j = 0; j < score.length; j++) {
           score[j] = score[j] + 10;
       }
     }
+    //logic for 2-10
     if (theHand[i] >= 2 && theHand[i] <= 10) {
       for (var j = 0; j < score.length; j++) {
           score[j] = score[j] + theHand[i];
       }
     }
+    //ace logic
     if (theHand[i] === 1) {
+      //the score length changes, so if we use score.length in the for loop we would encounter errors.
       var currentScoreLength = score.length;
       for (var k = 0; k < currentScoreLength; k++) {
+        //if our score is greater than 10, you would want your ace to only be equal to 1
         if (score[k] > 10) {
           score[k] += 1;
-          //console.log(score[k]);
+          //if you draw an ace and your hand is less then 10, you would want your ace to be equal to 11.
         } else if (score[k] <= 10) {
           score[k] += 11;
+          //but an ace can count for 1 as well as 11, so we push a new point onto the array, that way
+          //if we bust with the ace being 11, it will go back the second value, with an ace being equal to just 1
           score.push(score[k] + 1);
-          //console.log(score[k]);
         }
       }
     }
   }
   return score[0];
 }
-
+// in use at line 122
 function sortNumber(a,b) {
     return b - a;
 }
 
-function valueRound(round) {
-  for (var i = 0; i < round.length; i++) {
-    //console.log("Here: " + handValue(round[i]));
-  }
-}
+// function valueRound(round) {
+//   for (var i = 0; i < round.length; i++) {
+//     //console.log("Here: " + handValue(round[i]));
+//   }
+// }
+
+//whenever a play clicks the hit button, they get dealt a card, this function dynmically creates DOM elements, and then uses
+//the getCardImagePath function to render the appropriate card on screen
+// this function also deals with if the players hand goes over 21
 var hit = function() {
   var newCard = dealCard(deck);
   currentHands[1].push(newCard);
+  //shows what the player's hand value is currently
   currentHandValue.innerHTML = 'Your current hand value is ' + handValue(currentHands[1]);
   var drawnCards = document.getElementById('player_' + 1);
+  //creating DOM elements
   var playerLi = document.createElement('li');
   var cardImg = document.createElement('img');
   var result = document.getElementById('result');
+  //sets img tag src to the appropriate card, and renders it to the page
   drawnCards.appendChild(playerLi).appendChild(cardImg).setAttribute('src', newCard.getCardImagePath());
   playerLi.setAttribute('id', 'player_' + 1 + 'card' + currentHands[1].length);
-  // var hitCard = document.getElementById('player_' + i + 'card' + hands[1].length);
-  // hitCard.setAttribute('src', newCard.getCardImagePath());
-  //console.log(currentHands[1]);
+  // if the players hand is over 21 they bust meaning the game is over and they lose
   if ((handValue(currentHands[1]) > 21)) {
     currentHandValue.innerHTML = 'Your current hand value is ' + handValue(currentHands[1]);
     result.innerHTML = "I'm sorry you have busted";
-
     var dealerCardOne = document.getElementsByClassName('card-one');
-    //console.log(dealerCardOne);
+    //the dealer then shows his hand.
     dealerCardOne[0].setAttribute('src', currentHands[0][0].getCardImagePath());
+    //sinc the game is over the player can no longer hit, so we remove the event listener
     hitCard.removeEventListener('click', hit);
   }
 };
-
+//function that makes the dealer hit until he has 17, and also compares the dealers score, to the players score
+// and updates the h2 with the id of result accordingly.
   var dealerPlays = function() {
+    //players shouldn't be able to hit after they stand
     hitCard.removeEventListener('click', hit);
+    //setting up for while loop
     var dealerHit = true;
     var dealerHand = currentHands[0];
+    // now that the players have finished, the dealers card that was facedown, now gets flipped face up
+    // so we take the card that was previously down, and use the getCardImagePath function on it, to render the card to the DOM
+    // and show it to the players
     var dealerCardOne = document.getElementsByClassName('card-one');
     dealerCardOne[0].setAttribute('src', currentHands[0][0].getCardImagePath());
     while (dealerHit) {
+      //the dealer hits until he gets 17
       if (handValue(dealerHand) < 17) {
         var newCard = dealCard(deck);
         currentHands[0].push(newCard);
         var drawnCards = document.getElementsByClassName('dealer-cards');
+        //create DOM elements
         var div = document.createElement('div');
-        // set className for above div, then write a loop that will remove all elements from the parent, 'dealer-cards', with get ElementsByClassName
         var dealerLi = document.createElement('li');
         dealerLi.className = 'dealers-NewCard';
         var cardImg = document.createElement('img');
+        //use the img src and set it to getCardImagePath in order to render it to the page
         drawnCards[0].appendChild(dealerLi).appendChild(cardImg).setAttribute('src', newCard.getCardImagePath());
         dealerLi.setAttribute('id', 'dealercard' + newCard.rank);
         var dealerCard = document.getElementById('dealercard' + newCard.rank);
@@ -202,38 +224,39 @@ var hit = function() {
       } else {
         dealerHit = false;
         var result = document.getElementById('result');
+        //if the dealer gets over 21, the player automatically wins
         if (handValue(dealerHand) > 21) {
           result.innerHTML= 'the dealer busts you win';
+          // compares values of both players hands, and if the dealer has a better hand, they win.
         } else if (handValue(dealerHand) > handValue(currentHands[1])) {
           result.innerHTML = 'The dealer has a better hand, you lose';
+          //tie result
         } else if (handValue(dealerHand) === handValue(currentHands[1])) {
           result.innerHTML = 'You and the dealer have tied';
+          //player win logic
         } else {
           result.innerHTML = 'You have a better hand than the dealer, you win!';
         }
       }
     }
   };
-
+//whenever the new game button is clicked, it starts a fresh game. This function also clears any of the previous children from the dealerLi
+// or dynmically created playerLi, and removes them from the DOM
 function newGame() {
   var playersDiv = document.getElementById('players');
+  // when you've already played a game and want to start a new one, this while loop will clear away all the previous cards,
+  // by removing any children from the players Div.
   while (playersDiv.firstChild) {
     playersDiv.removeChild(playersDiv.firstChild);
   }
-  // var dealerCardLi = document.getElementsByClassName('dealer-card-two');
-  // while (dealerCardLi.firstChild) {
-  //   dealerCardLi.removeChild(dealerCardLi.firstChild);
-  // }
-  // var dealerCardTwo = document.getElementsByClassName('card-two');//update the dom for the dealer, add the elements for the player;
-  // var dealerCardOne = document.getElementsByClassName('card-one');
-  // dealerCardOne[0].setAttribute('src', '');
-  // dealerCardTwo[0].setAttribute('src', '');
   currentHandValue.innerHTML = '';
+  //clears previous game's results;
   var result = document.getElementById('result');
   result.innerHTML = '';
   hitCard.addEventListener('click', hit);
   var dealersNewCard = document.getElementsByClassName('dealers-NewCard');
   var dealersHand = document.getElementsByClassName('dealer-cards')[0];
+  //clears any cards from the previous game that the dealer had.
   while (dealersHand.firstChild) {
     dealersHand.removeChild(dealersHand.firstChild);
   }
