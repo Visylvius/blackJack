@@ -24,15 +24,13 @@ body {
 }
 #players_1 {
   /*text-align: center;*/
-  margin-left: auto;
-  margin-right: auto;
-  width: 40%;
+  margin: auto;
+  width: 90%;
   /*padding: 10px;*/
 }
 .dealer-cards {
     margin: auto;
     width: 60%;
-    padding: 10px;
 }
 
 /*#hit {
@@ -44,7 +42,8 @@ body {
 .buttons {
   width: auto;
   text-align: center;
+  margin-left: 50px;
 }
 #new-game {
-  
+
 }
