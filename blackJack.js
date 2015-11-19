@@ -1,3 +1,20 @@
+
+//Global Variables
+var deck = null;
+var currentHands = null;
+var newGameButton = document.getElementById('new-game');
+var hitCard = document.getElementById('hit');
+var stand = document.getElementById('stand');
+var currentHandValue = document.getElementById('current-hand');
+//DOM Event Listeners
+hitCard.addEventListener('click', hit);
+stand.addEventListener('click', dealerPlays);
+newGameButton.addEventListener('click', newGame);
+
+
+//Constructor function, creates ranks and suits for cards.
+// Get Card Image Path Function takes the suit and rank of the class, and then matches it the corresponding jpg file
+// rendering the card image to the DOM
 function Card(rank, suit) {
   this.rank = rank;
   this.suit = suit;
@@ -6,7 +23,7 @@ function Card(rank, suit) {
   };
 }
 
-
+//Using the suits array, we push a new card onto the deck array, with 4 suits, and 14 cards per suit.
 function makeDeck() {
   var deck = [];
   var suits = ['club', 'diamonds', 'hearts', 'spades'];
@@ -18,7 +35,7 @@ function makeDeck() {
   return deck;
 }
 
-
+//shuffle takes an array of objects, and randomizes the array.
 function shuffle(deck) {
  for (var i = deck.length - 1; i > 0; i--) {
    var j = Math.floor(Math.random() * (i + 1));
@@ -29,21 +46,26 @@ function shuffle(deck) {
   return deck;
 }
 
+//takes the first index of the array, or card.
 function dealCard(deck) {
   return deck.shift();
 }
 
-//dealer gets last card
+//creates an empty array for each player, making sure to leave the 0 index for the dealer.
+//we also dynamically create DOM elements for the players cards and use the getCardImagePath function to show what the player drew
 function dealRound(deck, numberOfPlayers) {
   var round = [];
+  //we use numberOfPlayers + 1 to make that the zero index is saved for the dealer. This will allow us to card code the dealer values in the future
   for (var i = 0; i < numberOfPlayers + 1; i++) {
     round.push([]);
+    //dynmically create a ul, within the foor loop make the Ul id unique for each player
     var playerUl = document.createElement('ul');
     playerUl.id = "player_" + i;
     //console.log('test' + playerUl);
     var playerId = document.getElementById('players');
     playerId.appendChild(playerUl);
   }
+  //first four loop in order to make sure each player gets two cards 
   for (var k = 0; k < 2; k++) {
     // number is added by 1 to include dealer.
    for (var j = 1; j <= numberOfPlayers; j++) {
@@ -220,14 +242,3 @@ function newGame() {
   currentHandValue.innerHTML = 'your current hand value is ' + handValue(currentHands[1]);
 
 }
-
-var deck = null;
-var currentHands = null;
-var newGameButton = document.getElementById('new-game');
-var hitCard = document.getElementById('hit');
-var stand = document.getElementById('stand');
-var currentHandValue = document.getElementById('current-hand');
-
-hitCard.addEventListener('click', hit);
-stand.addEventListener('click', dealerPlays);
-newGameButton.addEventListener('click', newGame);
