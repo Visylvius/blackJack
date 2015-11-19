@@ -1,4 +1,3 @@
-
 //Global Variables
 var deck = null;
 var currentHands = null;
@@ -6,10 +5,6 @@ var newGameButton = document.getElementById('new-game');
 var hitCard = document.getElementById('hit');
 var stand = document.getElementById('stand');
 var currentHandValue = document.getElementById('current-hand');
-//DOM Event Listeners
-hitCard.addEventListener('click', hit);
-stand.addEventListener('click', dealerPlays);
-newGameButton.addEventListener('click', newGame);
 
 
 //Constructor function, creates ranks and suits for cards.
@@ -60,39 +55,45 @@ function dealRound(deck, numberOfPlayers) {
     round.push([]);
     //dynmically create a ul, within the foor loop make the Ul id unique for each player
     var playerUl = document.createElement('ul');
+    //Set the Id in the four loop, so we can dynmically select each player further in the function
     playerUl.id = "player_" + i;
-    //console.log('test' + playerUl);
     var playerId = document.getElementById('players');
     playerId.appendChild(playerUl);
   }
-  //first four loop in order to make sure each player gets two cards 
+  //first four loop in order to make sure each player gets two cards
   for (var k = 0; k < 2; k++) {
-    // number is added by 1 to include dealer.
+    // we set j equal to one to make sure we skip over the dealer which is index 0, house deals to players, then deals to itself.
    for (var j = 1; j <= numberOfPlayers; j++) {
      round[j].push(dealCard(deck));
+     //Grab the players Ul dynmically and append list an item with a img tag.
        var playerCards = document.getElementById('player_' + j);
        var playerLi = document.createElement('li');
        var cardImg = document.createElement('img');
+       //sets the img tag source to the card image path
        playerCards.appendChild(playerLi).appendChild(cardImg).setAttribute('src', round[j][k].getCardImagePath());
        playerLi.setAttribute('id', 'player_' + j + 'card' + k);
        var playerCardOne = document.getElementById('player_' + j + 'card' + k);
        playerCardOne.setAttribute('src', round[j][0].getCardImagePath());
     }
+    // after the players have all been dealt one card, then we deal one card to the dealer
      round[0].push(dealCard(deck));
   }
+
   var dealerHand = document.getElementsByClassName('dealer-cards')[0];
-  var dealerLi = document.createElement('li');
-  var img = document.createElement('img');
+  // we dynmically create a li with a nested img and append it with the adjacentHTML call
   dealerHand.insertAdjacentHTML('beforeend', '<li><img class="card-one"></li><li><img class="card-two"></li>');
   var dealerCardOne = document.getElementsByClassName('card-one')[0];
   var dealerCardTwo = document.getElementsByClassName('card-two')[0];
   console.log(dealerCardOne);
+  // the first card for the dealer is always face down until the players stand, and let the dealer play his hand
+  //we use the getCardImagePath function to get the 2nd card of the dealer rendered on the page
   dealerCardOne.setAttribute('src', './classic-cards/cardback.png');
   dealerCardTwo.setAttribute('src', round[0][1].getCardImagePath());
   return round;
 }
 
-
+//takes the rank key of the Card object and applies the logic to make 11 and above equal to face cards
+//also adds logic for aces. As they can be equal to 1 or 11. 
 function handValue(hand) {
 
   var score = [];
@@ -156,7 +157,6 @@ function valueRound(round) {
 }
 var hit = function() {
   var newCard = dealCard(deck);
-  //console.log(newCard);
   currentHands[1].push(newCard);
   currentHandValue.innerHTML = 'Your current hand value is ' + handValue(currentHands[1]);
   var drawnCards = document.getElementById('player_' + 1);
@@ -242,3 +242,10 @@ function newGame() {
   currentHandValue.innerHTML = 'your current hand value is ' + handValue(currentHands[1]);
 
 }
+
+
+//DOM Event Listeners
+// we set these at the bottom, as they don't get hoisted, like variable declerations do.
+hitCard.addEventListener('click', hit);
+stand.addEventListener('click', dealerPlays);
+newGameButton.addEventListener('click', newGame);
