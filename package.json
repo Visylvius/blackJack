@@ -1,0 +1,22 @@
+{
+  "name": "blackjack",
+  "version": "1.0.0",
+  "description": "app for playing blackjack",
+  "main": "blackJack.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/visylvius/blackJack.git"
+  },
+  "author": "loren barrick",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/visylvius/blackJack/issues"
+  },
+  "homepage": "https://github.com/visylvius/blackJack#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
